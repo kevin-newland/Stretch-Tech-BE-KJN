@@ -1,4 +1,4 @@
-name: Run RSpec Tests
+nname: Run RSpec Tests
 
 on:
   push:
@@ -39,10 +39,19 @@ jobs:
 
       - name: Set up database
         run: |
-          bin/rails db:create db:schema:load --trace
+          bundle exec rails db:create db:schema:load
         env:
           RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: password
           DATABASE_URL: postgres://postgres:password@localhost:5432/stretch_tech_test
 
       - name: Run tests
         run: bundle exec rspec
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: password
+          DATABASE_URL: postgres://postgres:password@localhost:5432/stretch_tech_test
